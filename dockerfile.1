@@ -1,0 +1,36 @@
+FROM centos:latest
+
+RUN mkdir -p /root/Workspace/djangoVue
+COPY . /root/Workspace/djangoVue
+WORKDIR /root/Workspace/works
+
+RUN cd /etc/yum.repos.d/
+RUN sed -i 's/mirrorlist/#mirrorlist/g' /etc/yum.repos.d/CentOS-*
+RUN sed -i 's|#baseurl=http://mirror.centos.org|baseurl=http://vault.centos.org|g' /etc/yum.repos.d/CentOS-*
+RUN yum makecache
+
+RUN yum -y groupinstall "Development tools"
+RUN yum -y install zlib-devel bzip2-devel openssl-devel ncurses-devel sqlite-devel readline-devel tk-devel gcc make
+RUN yum -y install libffi-devel wget mysql-devel vim
+
+RUN wget https://cdn.npmmirror.com/binaries/python/3.9.8/Python-3.9.8.tgz
+RUN tar -zxvf Python-3.9.8.tgz
+RUN cd Python-3.9.8
+RUN mkdir /usr/local/python3
+RUN /root/Workspace/works/Python-3.9.8/configure --prefix=/usr/local/python3
+RUN make && make install
+
+RUN ln -s /usr/local/python3/bin/python3 /usr/local/bin/python3
+RUN ln -s /usr/local/python3/bin/pip3 /usr/local/bin/pip3
+
+RUN pip3 install /root/Workspace/djangoVue/file/asgiref-3.5.2-py3-none-any.whl
+RUN pip3 install /root/Workspace/djangoVue/file/sqlparse-0.4.2-py3-none-any.whl
+RUN pip3 install /root/Workspace/djangoVue/file/pytz-2022.2.1-py2.py3-none-any.whl
+RUN pip3 install /root/Workspace/djangoVue/file/typing_extensions-4.3.0-py3-none-any.whl
+RUN pip3 install /root/Workspace/djangoVue/file/Django-3.2.15-py3-none-any.whl
+RUN pip3 install /root/Workspace/djangoVue/file/django_cors_headers-3.13.0-py3-none-any.whl
+RUN pip3 install /root/Workspace/djangoVue/file/PyMySQL-1.0.2-py3-none-any.whl
+RUN pip3 install mysqlclient
+
+
+
