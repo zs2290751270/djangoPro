@@ -1,16 +1,15 @@
-
 from rest_framework import serializers
 from .models import Member
 
 
 class MemberSerializer(serializers.ModelSerializer):
-
     team_id = serializers.SerializerMethodField(label='队伍ID')
     team_name = serializers.SerializerMethodField(label='队伍名称')
 
     class Meta:
         model = Member
-        fields = ('id', 'member_name', 'member_code', 'member_desc', 'is_leader', 'team_id', 'team_name')
+        fields = ('id', 'member_name', 'member_code', 'member_desc', 'is_leader', 'team_id', 'team_name', 'created_at',
+                  'updated_at')
 
     def get_team_id(self, obj):
         if getattr(obj.team_info, 'id', None):
@@ -24,7 +23,6 @@ class MemberSerializer(serializers.ModelSerializer):
 
 
 class MemberCreateSerializer(serializers.ModelSerializer):
-
     member_name = serializers.CharField(allow_blank=True, allow_null=True, required=True)
     member_code = serializers.CharField(allow_blank=True, allow_null=True, required=True)
 
@@ -71,7 +69,6 @@ class MemberCreateSerializer(serializers.ModelSerializer):
 
 
 class MemberUpdateSerializer(serializers.ModelSerializer):
-
     member_name = serializers.CharField(allow_blank=True, allow_null=True, required=True)
     member_code = serializers.CharField(allow_blank=True, allow_null=True, required=True)
 
@@ -115,4 +112,3 @@ class MemberUpdateSerializer(serializers.ModelSerializer):
 
     def update(self, instance, validated_data):
         return super().update(instance, validated_data)
-

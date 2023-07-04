@@ -122,7 +122,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'race',
-        'HOST': '123.60.41.109',
+        'HOST': '10.87.240.186',
         'USER': 'root',
         'PASSWORD': 'Lova_0115',
         'PORT': 3306,

@@ -6,7 +6,6 @@ from ..member.models import Member
 
 
 class TeamSerializer(serializers.ModelSerializer):
-
     members = serializers.SerializerMethodField(label='选手')
 
     class Meta:
@@ -18,7 +17,9 @@ class TeamSerializer(serializers.ModelSerializer):
             'team_win',
             'team_lose',
             'team_desc',
-            'members'
+            'members',
+            'created_at',
+            'updated_at'
         )
 
     def get_members(self, obj):
@@ -33,7 +34,6 @@ class TeamSerializer(serializers.ModelSerializer):
 
 
 class TeamCreateSerializer(serializers.ModelSerializer):
-
     team_name = serializers.CharField(allow_blank=True, allow_null=True)
     team_group = serializers.CharField(allow_blank=True, allow_null=True)
 
@@ -126,4 +126,3 @@ class TeamUpdateSerializer(serializers.ModelSerializer):
             member.save()
 
         return super().update(instance, validated_data)
-

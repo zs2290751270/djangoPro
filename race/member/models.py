@@ -16,6 +16,8 @@ class Member(models.Model):
         null=True
     )
     is_leader = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name='creation time')
+    updated_at = models.DateTimeField(auto_now=True, verbose_name='update time')
 
     class Meta:
         db_table = 'race_member'

@@ -1,12 +1,16 @@
-FROM python:3.9.13
+FROM python:3.11.3
 
 RUN mkdir -p /root/.pip
 
 RUN mkdir -p /root/Workspace/djangoPro
+
+WORKDIR /root/Workspace/djangoPro
+
 COPY . /root/Workspace/djangoPro
 RUN mv /root/Workspace/djangoPro/pip.conf /root/.pip/
 
-RUN pip3 install -r /root/Workspace/djangoPro/requment.txt
+RUN pip3 install -r requments.txt
 
-CMD ["/root/Workspace/djangoPro/python", "manage.py", "runserver", "0.0.0.0:8088"]
- 
+EXPOSE 8001
+
+CMD ["uwsgi", "--http", ":8001", "--wsgi-file", "djangoPro/wsgi.py"]
